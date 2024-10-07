@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:adv_basics/data/questions.dart';
 
 class ResultsScreen extends StatelessWidget {
-  final List<String> choosenAnwers;
+  List<String> choosenAnwers;
+
+  bool toStart = false;
+
   List<Map<String, Object>> getSumaryData() {
     final List<Map<String, Object>> summary = [];
 
@@ -20,7 +23,7 @@ class ResultsScreen extends StatelessWidget {
     return summary;
   }
 
-  const ResultsScreen({super.key, required this.choosenAnwers});
+  ResultsScreen({super.key, required this.choosenAnwers});
   @override
   Widget build(BuildContext context) {
     final summaryData = getSumaryData();
@@ -29,7 +32,14 @@ class ResultsScreen extends StatelessWidget {
       return data['correct_answer'] == data['user_answer'];
     }).length;
 
-    void startOver() {}
+    // screenWidget = ResultsScreen(choosenAnwers: selectedAnswers);
+
+    void startOver() {
+      print('foi');
+      toStart = true;
+
+      choosenAnwers = [];
+    }
 
     return SizedBox(
       width: double.infinity,
@@ -38,17 +48,26 @@ class ResultsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('you answered $numCorrectQuestions correctly out of $numTotalQuestions'),
+            Text(
+              'you answered $numCorrectQuestions correctly out of $numTotalQuestions',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center
+            ),
             SizedBox(
               height: 30,
             ),
-            QuestionsSummary(summaryData), 
+            QuestionsSummary(summaryData),
             SizedBox(
               height: 30,
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text('restart'))
+            OutlinedButton.icon(
+              onPressed: startOver,
+              style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
+              icon: Icon(Icons.refresh_outlined),
+              label: Text('Start Quiz')),
           ],
         ),
       ),
