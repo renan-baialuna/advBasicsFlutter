@@ -23,7 +23,10 @@ class ResultsScreen extends StatelessWidget {
     return summary;
   }
 
-  ResultsScreen({super.key, required this.choosenAnwers});
+  ResultsScreen({super.key, required this.choosenAnwers, required this.onReset});
+
+  final void Function() onReset;
+
   @override
   Widget build(BuildContext context) {
     final summaryData = getSumaryData();
@@ -35,10 +38,7 @@ class ResultsScreen extends StatelessWidget {
     // screenWidget = ResultsScreen(choosenAnwers: selectedAnswers);
 
     void startOver() {
-      print('foi');
-      toStart = true;
-
-      choosenAnwers = [];
+      onReset();
     }
 
     return SizedBox(

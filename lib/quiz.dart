@@ -37,11 +37,15 @@ class _Quiz extends State<Quiz> {
         activeScreen = 'results-screen';
       });
     }
+  }
 
-    if (selectedAnswers.isEmpty) {
-      activeScreen = 'to-start';
-      print('aqui 2');
-    }
+  void resetTest() {
+
+      setState(() {
+        activeScreen = 'start-screen';
+        selectedAnswers = [];
+      });
+
   }
 
   void switchScreen() {
@@ -55,6 +59,8 @@ class _Quiz extends State<Quiz> {
         setState(() {
       // activeScreen = QuestionsScreen();
       activeScreen = 'start-screen';
+
+
     }); 
   }
 
@@ -71,7 +77,10 @@ class _Quiz extends State<Quiz> {
         );
     }
     if (activeScreen == 'results-screen') {
-      screenWidget = ResultsScreen(choosenAnwers: selectedAnswers);
+      screenWidget = ResultsScreen(
+        choosenAnwers: selectedAnswers, 
+        onReset: resetTest,
+      );
 
     }
 
